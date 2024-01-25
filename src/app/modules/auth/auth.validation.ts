@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const userRegistrationValidationSchema = z.object({
+const userRegisterValidationSchema = z.object({
   fullName: z.string({
     invalid_type_error: 'Full name must be string',
     required_error: 'Full name is required',
@@ -15,5 +15,5 @@ const userRegistrationValidationSchema = z.object({
 });
 
 export const authValidation = {
-  userRegistrationValidationSchema,
+  userRegisterValidationSchema,
 };

@@ -13,7 +13,14 @@ const auth = () => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req?.headers?.authorization;
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are nto authorized ');
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: 'Unauthorized Access',
+        errorMessage:
+          'You do not have the necessary permissions to access this resource.',
+        errorDetails: null,
+        stack: null,
+      });
     }
     // check if the token is valid-
     // checking if the given token is valid
@@ -26,12 +33,26 @@ const auth = () => {
         config.jwt_access_secret as string,
       ) as JwtPayload;
     } catch (err) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'Token is expired');
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: 'Unauthorized Access',
+        errorMessage: 'Token is expired',
+        errorDetails: null,
+        stack: null,
+      });
     }
     const { email } = decoded;
     if (!(await User.isUserExists(email))) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: 'Unauthorized Access',
+        errorMessage:
+          'You do not have the necessary permissions to access this resource.',
+        errorDetails: null,
+        stack: null,
+      });
     }
+    next();
   });
 };
 

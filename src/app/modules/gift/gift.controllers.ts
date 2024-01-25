@@ -14,6 +14,18 @@ const createGift = catchAsync(async (req, res) => {
   });
 });
 
+// get gifts
+const getGifts = catchAsync(async (req, res) => {
+  const result = await giftServices.getGiftsFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Gifts retrieved successfully',
+    data: result,
+  });
+});
+
 export const giftControllers = {
   createGift,
+  getGifts,
 };

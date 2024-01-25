@@ -6,6 +6,13 @@ const createGiftIntoDB = async (payload: TGift) => {
   return result;
 };
 
+// get gifts from db
+const getGiftsFromDB = async () => {
+  const result = await Gift.find();
+  return result;
+};
+
 export const giftServices = {
   createGiftIntoDB,
+  getGiftsFromDB,
 };

@@ -36,8 +36,21 @@ const updateGift = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+// delete gift
+const deleteGift = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await giftServices.deleteGiftFromDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Gift deleted successfully',
+    data: result,
+  });
+});
 export const giftControllers = {
   createGift,
   getGifts,
   updateGift,
+  deleteGift,
 };

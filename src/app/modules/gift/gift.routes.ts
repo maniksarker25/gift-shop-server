@@ -19,5 +19,6 @@ router.put(
   validationRequest(giftValidation.updateGiftValidationSchema),
   giftControllers.updateGift,
 );
+router.delete('/:id', auth(), giftControllers.deleteGift);
 
 export const giftRoutes = router;

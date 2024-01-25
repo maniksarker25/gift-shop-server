@@ -19,8 +19,14 @@ const updateGiftFromDB = async (id: string, payload: Partial<TGift>) => {
   });
   return result;
 };
+// delete gift from db
+const deleteGiftFromDB = async (id: string) => {
+  const result = await Gift.findByIdAndDelete(id);
+  return result;
+};
 export const giftServices = {
   createGiftIntoDB,
   getGiftsFromDB,
   updateGiftFromDB,
+  deleteGiftFromDB,
 };

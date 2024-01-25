@@ -3,23 +3,28 @@ import { Schema, model } from 'mongoose';
 import { TUser, UserModel } from './auth.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
-const userSchema = new Schema<TUser>({
-  fullName: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new Schema<TUser>(
+  {
+    fullName: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: 0,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
+  {
+    timestamps: true,
   },
-  password: {
-    type: String,
-    required: true,
-    select: 0,
-  },
-});
+);
 
 // middleware for password hashed
 userSchema.pre('save', async function (next) {

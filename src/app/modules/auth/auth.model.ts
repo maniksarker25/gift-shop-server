@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { Schema, model } from 'mongoose';
-import { TUser } from './auth.interface';
+import { TUser, UserModel } from './auth.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 const userSchema = new Schema<TUser>({
@@ -17,6 +17,7 @@ const userSchema = new Schema<TUser>({
   password: {
     type: String,
     required: true,
+    select: 0,
   },
 });
 
@@ -36,4 +37,16 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-export const User = model<TUser>('User', userSchema);
+// statics method for check if the user exists or not
+userSchema.statics.isUserExists = async function (email) {
+  return await User.findOne({ email }).select('+password');
+};
+// statics method for password matched
+userSchema.statics.isPasswordMatched = async function (
+  plainPassword: string,
+  hashedPassword: string,
+) {
+  return await bcrypt.compare(plainPassword, hashedPassword);
+};
+
+export const User = model<TUser, UserModel>('User', userSchema);

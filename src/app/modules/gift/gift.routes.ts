@@ -13,5 +13,11 @@ router.post(
   giftControllers.createGift,
 );
 router.get('/', auth(), giftControllers.getGifts);
+router.put(
+  '/:id',
+  auth(),
+  validationRequest(giftValidation.updateGiftValidationSchema),
+  giftControllers.updateGift,
+);
 
 export const giftRoutes = router;

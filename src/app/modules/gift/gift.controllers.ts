@@ -24,8 +24,20 @@ const getGifts = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
+// update gift
+const updateGift = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const payload = req.body;
+  const result = await giftServices.updateGiftFromDB(id, payload);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Gift updated successfully',
+    data: result,
+  });
+});
 export const giftControllers = {
   createGift,
   getGifts,
+  updateGift,
 };

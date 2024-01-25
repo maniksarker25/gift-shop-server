@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
-export type TSales = {
-  gift: Types.ObjectId;
+export type TSale = {
+  giftId: Types.ObjectId;
   quantity: number;
   buyerName: string;
   date: string;

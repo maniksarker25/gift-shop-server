@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-const createSalesValidationSchema = z.object({
-  gift: z.string({
-    invalid_type_error: 'Gift must be string',
-    required_error: 'Gift is required',
+const createSaleValidationSchema = z.object({
+  giftId: z.string({
+    invalid_type_error: 'GiftId must be string',
+    required_error: 'GiftId is required',
   }),
   quantity: z.number({
     invalid_type_error: 'Quantity must be a number',
@@ -19,6 +19,6 @@ const createSalesValidationSchema = z.object({
   }),
 });
 
-export const salesValidation = {
-  createSalesValidationSchema,
+export const SaleValidation = {
+  createSaleValidationSchema,
 };

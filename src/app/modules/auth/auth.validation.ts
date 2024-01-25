@@ -14,6 +14,18 @@ const userRegisterValidationSchema = z.object({
   }),
 });
 
+//
+const userLoginValidationSchema = z.object({
+  email: z.string({
+    invalid_type_error: 'email must be string',
+    required_error: 'Email is required',
+  }),
+  password: z.string({
+    required_error: 'Password is required',
+  }),
+});
+
 export const authValidation = {
   userRegisterValidationSchema,
+  userLoginValidationSchema,
 };

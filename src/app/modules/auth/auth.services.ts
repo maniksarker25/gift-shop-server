@@ -6,7 +6,10 @@ import { User } from './auth.model';
 import config from '../../config';
 import { createToken } from './auth.utilis';
 
-const registerUserIntoDB = (payload: TUser) => {
+const registerUserIntoDB = async (payload: TUser) => {
+  if (await User.isUserExists(payload.email)) {
+    throw new AppError(httpStatus.CONFLICT, 'User already exist');
+  }
   const result = User.create(payload);
   return result;
 };
@@ -36,7 +39,7 @@ const userLoginIntoDB = async (payload: TLoginUser) => {
     config.jwt_access_expires_in as string,
   );
   const result = await User.findOne({ email });
-  return { user: result, accessToken };
+  return { user: result, token: accessToken };
 };
 
 export const authServices = {

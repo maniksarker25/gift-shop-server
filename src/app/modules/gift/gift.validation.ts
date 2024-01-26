@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Brands, Categories, Occasions, Themes } from './gift.constant';
 
 const createGiftValidationSchema = z.object({
   name: z.string({
@@ -13,26 +14,14 @@ const createGiftValidationSchema = z.object({
     invalid_type_error: 'Quantity must be a number',
     required_error: 'Quantity is required',
   }),
-  occasion: z.string({
-    invalid_type_error: 'Occasion must be a string',
-    required_error: 'Occasion is required',
-  }),
+  occasion: z.enum([...Occasions] as [string, ...string[]]),
   recipient: z.string({
     invalid_type_error: 'Recipient must be a string',
     required_error: 'Recipient is required',
   }),
-  category: z.string({
-    invalid_type_error: 'Category must be string',
-    required_error: 'Category is required',
-  }),
-  theme: z.string({
-    invalid_type_error: 'Theme must be a string',
-    required_error: 'Theme is required',
-  }),
-  brand: z.string({
-    invalid_type_error: 'Brand must be a string',
-    required_error: 'Brand is required',
-  }),
+  category: z.enum([...Categories] as [string, ...string[]]),
+  theme: z.enum([...Themes] as [string, ...string[]]),
+  brand: z.enum([...Brands] as [string, ...string[]]),
   color: z.string({
     invalid_type_error: 'Color must be a string',
     required_error: 'Color is required',

@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { TGift } from './gift.interface';
+import { Brands, Categories, Occasions, Themes } from './gift.constant';
 
 const giftSchema = new Schema<TGift>(
   {
@@ -18,6 +19,7 @@ const giftSchema = new Schema<TGift>(
     },
     occasion: {
       type: String,
+      enum: Occasions,
       required: true,
     },
     recipient: {
@@ -26,14 +28,17 @@ const giftSchema = new Schema<TGift>(
     },
     category: {
       type: String,
+      enum: Categories,
       required: true,
     },
     theme: {
       type: String,
+      enum: Themes,
       required: true,
     },
     brand: {
       type: String,
+      enum: Brands,
       required: true,
     },
     color: {

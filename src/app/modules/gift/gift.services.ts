@@ -10,7 +10,7 @@ const createGiftIntoDB = async (payload: TGift) => {
 // get gifts from db--------------
 const getGiftsFromDB = async (query: Record<string, unknown>) => {
   const giftQuery = new QueryBuilder(Gift.find(), query)
-    .search('name')
+    .search(['name', 'recipient'])
     .filter();
   const result = await giftQuery.modelQuery;
   return result;

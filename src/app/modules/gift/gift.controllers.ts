@@ -16,7 +16,7 @@ const createGift = catchAsync(async (req, res) => {
 
 // get gifts
 const getGifts = catchAsync(async (req, res) => {
-  const result = await giftServices.getGiftsFromDB();
+  const result = await giftServices.getGiftsFromDB(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

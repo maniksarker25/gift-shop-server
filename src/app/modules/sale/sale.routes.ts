@@ -11,5 +11,6 @@ router.post(
   validationRequest(SaleValidation.createSaleValidationSchema),
   saleControllers.createSale,
 );
+router.get('/', auth(), saleControllers.getSaleHistory);
 
 export const saleRoutes = router;

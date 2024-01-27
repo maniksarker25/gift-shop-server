@@ -22,6 +22,81 @@ const createSaleIntoDB = async (payload: TSale) => {
   return result;
 };
 
+const getSalesHistoryFromDB = async (query: Record<string, unknown>) => {
+  const { filter } = query;
+
+  let filterDate: Record<string, unknown> = {};
+
+  if (filter) {
+    const currentDate = new Date();
+
+    switch (filter) {
+      case 'daily':
+        filterDate = {
+          date: {
+            $gte: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate(),
+            ),
+            $lt: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate() + 1,
+            ),
+          },
+        };
+        break;
+      case 'weekly':
+        filterDate = {
+          date: {
+            $gte: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate() - currentDate.getDay(),
+            ),
+            $lt: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate() + (6 - currentDate.getDay()) + 1,
+            ),
+          },
+        };
+        break;
+      case 'monthly':
+        filterDate = {
+          date: {
+            $gte: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              1,
+            ),
+            $lt: new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth() + 1,
+              1,
+            ),
+          },
+        };
+        break;
+      case 'yearly':
+        filterDate = {
+          date: {
+            $gte: new Date(currentDate.getFullYear(), 0, 1),
+            $lt: new Date(currentDate.getFullYear() + 1, 0, 1),
+          },
+        };
+        break;
+      default:
+        break;
+    }
+  }
+
+  const result = await Sale.find(filterDate).populate('giftId');
+  return result;
+};
+
 export const saleServices = {
   createSaleIntoDB,
+  getSalesHistoryFromDB,
 };

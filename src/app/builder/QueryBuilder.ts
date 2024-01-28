@@ -21,9 +21,17 @@ class QueryBuilder<T> {
     }
     return this;
   }
+  priceRange(minPrice: number, maxPrice: number) {
+    console.log(minPrice, maxPrice);
+    this.modelQuery = this.modelQuery.find({
+      price: { $gte: minPrice, $lte: maxPrice },
+    } as FilterQuery<T>);
+
+    return this;
+  }
   filter() {
     const queryObj = { ...this.query };
-    const excludeFields = ['searchTerm'];
+    const excludeFields = ['searchTerm', 'minPrice', 'maxPrice'];
     excludeFields.forEach((el) => delete queryObj[el]);
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
     return this;

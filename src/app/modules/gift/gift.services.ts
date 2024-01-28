@@ -12,6 +12,13 @@ const getGiftsFromDB = async (query: Record<string, unknown>) => {
   const giftQuery = new QueryBuilder(Gift.find({ quantity: { $gt: 0 } }), query)
     .search(['name', 'recipient'])
     .filter();
+  let minPrice = 0;
+  let maxPrice = Infinity;
+  if (query?.minPrice || query?.maxPrice) {
+    minPrice = parseFloat(query?.minPrice as string) || 0;
+    maxPrice = parseFloat(query?.maxPrice as string) || Infinity;
+    giftQuery.priceRange(minPrice, maxPrice);
+  }
   const result = await giftQuery.modelQuery;
   return result;
 };

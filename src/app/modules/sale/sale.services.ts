@@ -24,6 +24,7 @@ const createSaleIntoDB = async (payload: TSale) => {
 
 const getSalesHistoryFromDB = async (query: Record<string, unknown>) => {
   const { filter } = query;
+  console.log(filter);
 
   let filterDate: Record<string, unknown> = {};
 

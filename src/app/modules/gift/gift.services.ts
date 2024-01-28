@@ -1,4 +1,4 @@
-import QueryBuilder from '../../builder/queryBuilder';
+import QueryBuilder from '../../builder/QueryBuilder';
 import { TGift } from './gift.interface';
 import { Gift } from './gift.model';
 

@@ -14,6 +14,7 @@ const createSale = catchAsync(async (req, res) => {
   });
 });
 const getSaleHistory = catchAsync(async (req, res) => {
+  // console.log(req.query);
   const result = await saleServices.getSalesHistoryFromDB(req.query);
 
   sendResponse(res, {

@@ -12,8 +12,7 @@ app.use(cors());
 app.use('/api', router);
 
 app.get('/', (req: Request, res: Response) => {
-  const a = 10;
-  res.send(a);
+  res.send('Gift management is Connected');
 });
 
 // global error handler

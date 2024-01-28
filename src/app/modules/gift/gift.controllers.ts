@@ -49,7 +49,7 @@ const deleteSingleGift = catchAsync(async (req, res) => {
   });
 });
 const deleteMultipleGift = catchAsync(async (req, res) => {
-  const ids = req.body;
+  const { ids } = req.body;
   const result = await giftServices.deleteMultipleGiftFromDB(ids);
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -30,6 +30,7 @@ const deleteSingleGiftFromDB = async (id: string) => {
 };
 // delete multiple gift from db
 const deleteMultipleGiftFromDB = async (ids: string[]) => {
+  console.log(ids);
   const result = await Gift.deleteMany({ _id: { $in: ids } });
   return result;
 };

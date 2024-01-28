@@ -12,6 +12,7 @@ router.post(
   validationRequest(giftValidation.createGiftValidationSchema),
   giftControllers.createGift,
 );
+router.post('/delete-gifts', auth(), giftControllers.deleteMultipleGift);
 router.get('/', auth(), giftControllers.getGifts);
 router.put(
   '/:id',
@@ -20,6 +21,5 @@ router.put(
   giftControllers.updateGift,
 );
 router.delete('/:id', auth(), giftControllers.deleteSingleGift);
-router.delete('/', auth(), giftControllers.deleteMultipleGift);
 
 export const giftRoutes = router;

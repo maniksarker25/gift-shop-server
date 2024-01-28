@@ -24,13 +24,19 @@ const updateGiftFromDB = async (id: string, payload: Partial<TGift>) => {
   return result;
 };
 // delete gift from db---------------------
-const deleteGiftFromDB = async (id: string) => {
+const deleteSingleGiftFromDB = async (id: string) => {
   const result = await Gift.findByIdAndDelete(id);
+  return result;
+};
+// delete multiple gift from db
+const deleteMultipleGiftFromDB = async (ids: string[]) => {
+  const result = await Gift.deleteMany({ _id: { $in: ids } });
   return result;
 };
 export const giftServices = {
   createGiftIntoDB,
   getGiftsFromDB,
   updateGiftFromDB,
-  deleteGiftFromDB,
+  deleteSingleGiftFromDB,
+  deleteMultipleGiftFromDB,
 };

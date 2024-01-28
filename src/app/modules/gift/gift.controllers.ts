@@ -38,9 +38,9 @@ const updateGift = catchAsync(async (req, res) => {
 });
 
 // delete gift
-const deleteGift = catchAsync(async (req, res) => {
+const deleteSingleGift = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await giftServices.deleteGiftFromDB(id);
+  const result = await giftServices.deleteSingleGiftFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -48,9 +48,21 @@ const deleteGift = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const deleteMultipleGift = catchAsync(async (req, res) => {
+  const ids = req.body;
+  const result = await giftServices.deleteMultipleGiftFromDB(ids);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Gifts deleted successfully',
+    data: result,
+  });
+});
+
 export const giftControllers = {
   createGift,
   getGifts,
   updateGift,
-  deleteGift,
+  deleteSingleGift,
+  deleteMultipleGift,
 };

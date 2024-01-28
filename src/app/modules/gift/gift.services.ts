@@ -9,7 +9,7 @@ const createGiftIntoDB = async (payload: TGift) => {
 
 // get gifts from db--------------
 const getGiftsFromDB = async (query: Record<string, unknown>) => {
-  const giftQuery = new QueryBuilder(Gift.find(), query)
+  const giftQuery = new QueryBuilder(Gift.find({ quantity: { $gt: 0 } }), query)
     .search(['name', 'recipient'])
     .filter();
   const result = await giftQuery.modelQuery;
@@ -30,7 +30,6 @@ const deleteSingleGiftFromDB = async (id: string) => {
 };
 // delete multiple gift from db
 const deleteMultipleGiftFromDB = async (ids: string[]) => {
-  console.log(ids);
   const result = await Gift.deleteMany({ _id: { $in: ids } });
   return result;
 };

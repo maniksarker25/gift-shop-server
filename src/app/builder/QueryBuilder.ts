@@ -22,7 +22,6 @@ class QueryBuilder<T> {
     return this;
   }
   priceRange(minPrice: number, maxPrice: number) {
-    console.log(minPrice, maxPrice);
     this.modelQuery = this.modelQuery.find({
       price: { $gte: minPrice, $lte: maxPrice },
     } as FilterQuery<T>);

@@ -4,7 +4,7 @@ import { Gift } from '../gift/gift.model';
 import { Sale } from './sale.model';
 import { TSale } from './sale.interface';
 
-const createSaleIntoDB = async (payload: TSale) => {
+const createSaleIntoDB = async (payload: TSale, sellerId: string) => {
   const { giftId, quantity } = payload;
   const gift = await Gift.findById(giftId);
   if (!gift) {
@@ -16,7 +16,7 @@ const createSaleIntoDB = async (payload: TSale) => {
       'Sale quantity cannot exceed the current available stock',
     );
   }
-  const result = await Sale.create(payload);
+  const result = await Sale.create({ ...payload, seller: sellerId });
   const newQuantity = gift.quantity - payload.quantity;
   await Gift.findByIdAndUpdate(giftId, { quantity: newQuantity });
   return result;

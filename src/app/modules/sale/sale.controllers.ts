@@ -5,7 +5,8 @@ import { saleServices } from './sale.services';
 
 const createSale = catchAsync(async (req, res) => {
   const payload = req.body;
-  const result = await saleServices.createSaleIntoDB(payload);
+  const sellerId = req.user?._id;
+  const result = await saleServices.createSaleIntoDB(payload, sellerId);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,

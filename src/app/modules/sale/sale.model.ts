@@ -8,6 +8,11 @@ const SaleSchema = new Schema<TSale>(
       ref: 'Gift',
       required: true,
     },
+    seller: {
+      type: Schema.Types.ObjectId,
+      ref: 'Seller',
+      required: true,
+    },
     quantity: {
       type: Number,
       required: true,

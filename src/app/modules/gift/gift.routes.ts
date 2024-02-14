@@ -18,7 +18,11 @@ router.post(
   auth(USER_ROLE.manager),
   giftControllers.deleteMultipleGift,
 );
-router.get('/', auth(USER_ROLE.manager), giftControllers.getGifts);
+router.get(
+  '/',
+  auth(USER_ROLE.manager, USER_ROLE.seller),
+  giftControllers.getGifts,
+);
 router.put(
   '/:id',
   auth(USER_ROLE.manager),

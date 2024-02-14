@@ -8,8 +8,9 @@ import config from '../config';
 import { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import { User } from '../modules/auth/auth.model';
+import { TUserRole } from '../modules/auth/auth.interface';
 
-const auth = () => {
+const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req?.headers?.authorization;
     if (!token) {
@@ -41,7 +42,7 @@ const auth = () => {
         stack: null,
       });
     }
-    const { email } = decoded;
+    const { email, role } = decoded;
     if (!(await User.isUserExists(email))) {
       return res.status(httpStatus.BAD_REQUEST).json({
         success: false,
@@ -52,6 +53,10 @@ const auth = () => {
         stack: null,
       });
     }
+    if (requiredRoles && !requiredRoles.includes(role)) {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'Your are not authorized');
+    }
+    req.user = decoded as JwtPayload;
     next();
   });
 };

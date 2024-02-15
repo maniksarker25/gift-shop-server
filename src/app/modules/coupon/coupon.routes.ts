@@ -13,5 +13,6 @@ router.post(
   validationRequest(couponValidations.createCouponValidationSchema),
   couponControllers.createCoupon,
 );
+router.get('/', auth(USER_ROLE.manager), couponControllers.getAllCoupons);
 
 export const couponRoutes = router;

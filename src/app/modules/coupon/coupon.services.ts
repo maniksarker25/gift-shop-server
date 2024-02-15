@@ -6,6 +6,12 @@ const createCouponIntoDB = async (payload: TCoupon) => {
   return result;
 };
 
+const getAllCouponFromDB = async () => {
+  const result = await Coupon.find();
+  return result;
+};
+
 export const couponServices = {
   createCouponIntoDB,
+  getAllCouponFromDB,
 };

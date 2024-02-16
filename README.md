@@ -2,7 +2,7 @@
 - Make a Gift management application with express,mongoose and typescript
 
 - ## Host Link
-- Hosted in Vercel => https://gift-shop-management-backend.vercel.app/
+- Hosted in Vercel => https://gift-shop-server-dusky.vercel.app/
 
 - ### Instructions for run this file locally
 - npm install --force (run this command in terminal for this file for install all packages)

@@ -12,4 +12,5 @@ export type TGift = {
   theme: TTheme;
   brand: TBrand;
   color: string;
+  isDeleted: boolean;
 };

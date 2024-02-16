@@ -9,7 +9,10 @@ const createGiftIntoDB = async (payload: TGift) => {
 
 // get gifts from db---------------------------
 const getGiftsFromDB = async (query: Record<string, unknown>) => {
-  const giftQuery = new QueryBuilder(Gift.find({ quantity: { $gt: 0 } }), query)
+  const giftQuery = new QueryBuilder(
+    Gift.find({ quantity: { $gt: 0 }, isDeleted: false }),
+    query,
+  )
     .search(['name', 'recipient'])
     .filter();
   let minPrice = 0;
@@ -32,12 +35,15 @@ const updateGiftFromDB = async (id: string, payload: Partial<TGift>) => {
 };
 // delete gift from db---------------------
 const deleteSingleGiftFromDB = async (id: string) => {
-  const result = await Gift.findByIdAndDelete(id);
+  const result = await Gift.findByIdAndUpdate(id, { isDeleted: true });
   return result;
 };
 // delete multiple gift from db
 const deleteMultipleGiftFromDB = async (ids: string[]) => {
-  const result = await Gift.deleteMany({ _id: { $in: ids } });
+  const result = await Gift.updateMany(
+    { _id: { $in: ids } },
+    { isDeleted: true },
+  );
   return result;
 };
 export const giftServices = {

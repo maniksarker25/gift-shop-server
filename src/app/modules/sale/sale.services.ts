@@ -18,6 +18,7 @@ const createSaleIntoDB = async (payload: TSale, sellerId: string) => {
     );
   }
   let result;
+  // if the coupon exits---------
   if (payload?.coupon) {
     const coupon = await Coupon.findOne({ coupon: payload.coupon });
     if (!coupon) {

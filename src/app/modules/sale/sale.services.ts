@@ -117,7 +117,7 @@ const getSalesHistoryFromDB = async (query: Record<string, unknown>) => {
     }
   }
 
-  const result = await Sale.find(filterDate).populate('giftId');
+  const result = await Sale.find(filterDate).populate('giftId seller');
   return result;
 };
 

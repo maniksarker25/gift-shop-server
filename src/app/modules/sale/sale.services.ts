@@ -33,6 +33,7 @@ const createSaleIntoDB = async (payload: TSale, sellerId: string) => {
     result = await Sale.create({
       ...payload,
       totalPrice: mainTotalPrice,
+      discountPercentage,
       seller: sellerId,
     });
   } else {

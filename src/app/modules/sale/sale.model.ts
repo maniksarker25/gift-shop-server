@@ -26,6 +26,9 @@ const SaleSchema = new Schema<TSale>(
       type: Number,
       required: true,
     },
+    discountPercentage: {
+      type: Number,
+    },
 
     date: {
       type: Date,

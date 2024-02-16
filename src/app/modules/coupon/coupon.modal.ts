@@ -10,6 +10,7 @@ const couponSchema = new Schema<TCoupon>(
     coupon: {
       type: String,
       required: true,
+      unique: true,
     },
     discountPercentage: {
       type: Number,

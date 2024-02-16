@@ -5,5 +5,7 @@ export type TSale = {
   seller: Types.ObjectId;
   quantity: number;
   buyerName: string;
+  totalPrice: number;
+  coupon?: string;
   date: Date;
 };

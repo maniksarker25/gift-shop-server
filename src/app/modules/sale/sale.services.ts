@@ -3,6 +3,7 @@ import AppError from '../../error/appError';
 import { Gift } from '../gift/gift.model';
 import { Sale } from './sale.model';
 import { TSale } from './sale.interface';
+import { Coupon } from '../coupon/coupon.modal';
 
 const createSaleIntoDB = async (payload: TSale, sellerId: string) => {
   const { giftId, quantity } = payload;
@@ -16,7 +17,28 @@ const createSaleIntoDB = async (payload: TSale, sellerId: string) => {
       'Sale quantity cannot exceed the current available stock',
     );
   }
-  const result = await Sale.create({ ...payload, seller: sellerId });
+  let result;
+  if (payload?.coupon) {
+    const coupon = await Coupon.findOne({ coupon: payload.coupon });
+    if (!coupon) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Coupon invalid');
+    }
+    if (new Date() > coupon?.expireDate) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Coupon is expired');
+    }
+    const discountPercentage = coupon.discountPercentage;
+    const totalPrice = gift?.price * quantity;
+    const discount = (totalPrice * discountPercentage) / 100;
+    const mainTotalPrice = parseFloat((totalPrice - discount).toFixed(2));
+    result = await Sale.create({
+      ...payload,
+      totalPrice: mainTotalPrice,
+      seller: sellerId,
+    });
+  } else {
+    const totalPrice = gift?.price * quantity;
+    result = await Sale.create({ ...payload, totalPrice, seller: sellerId });
+  }
   const newQuantity = gift.quantity - payload.quantity;
   await Gift.findByIdAndUpdate(giftId, { quantity: newQuantity });
   return result;
